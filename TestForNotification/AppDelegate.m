@@ -30,17 +30,17 @@
   [defaultCenter addObserver:self selector:@selector(networkDidLogin:) name:kAPNetworkDidLoginNotification object:nil];
   [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kAPNetworkDidReceiveMessageNotification object:nil];
   
-  NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-  if (dictionary != nil)
-  {
-    NSString *title = [dictionary valueForKey:@"title"];
-    NSString *content = [dictionary valueForKey:@"content"];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-    UIAlertView *alertView =  [[UIAlertView alloc] initWithTitle:@"收到电话" message:[NSString stringWithFormat:@"收到电话\ndate:%@\ntitle:%@\ncontent:%@", [dateFormatter stringFromDate:[NSDate date]],title,content] delegate:nil cancelButtonTitle:@"接听" otherButtonTitles:@"拒绝", nil];
-    [alertView show];
-  }
+//  NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//  if (dictionary != nil)
+//  {
+//    NSString *title = [dictionary valueForKey:@"title"];
+//    NSString *content = [dictionary valueForKey:@"content"];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+//    UIAlertView *alertView =  [[UIAlertView alloc] initWithTitle:@"收到电话" message:[NSString stringWithFormat:@"收到电话\ndate:%@\ntitle:%@\ncontent:%@", [dateFormatter stringFromDate:[NSDate date]],title,content] delegate:nil cancelButtonTitle:@"接听" otherButtonTitles:@"拒绝", nil];
+//    [alertView show];
+//  }
 
   
     return YES;
@@ -56,9 +56,6 @@
   
   // Required
   [APService handleRemoteNotification:userInfo];
-  
-  
-  
   
   NSString *title = [userInfo valueForKey:@"title"];
   NSString *content = [userInfo valueForKey:@"content"];
@@ -77,7 +74,17 @@
   // IOS 7 Support Required
   [APService handleRemoteNotification:userInfo];
   completionHandler(UIBackgroundFetchResultNewData);
+  [APService handleRemoteNotification:userInfo];
+  
+  NSString *title = [userInfo valueForKey:@"title"];
+  NSString *content = [userInfo valueForKey:@"content"];
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  
+  [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+  UIAlertView *alertView =  [[UIAlertView alloc] initWithTitle:@"收到电话" message:[NSString stringWithFormat:@"收到电话\ndate:%@\ntitle:%@\ncontent:%@", [dateFormatter stringFromDate:[NSDate date]],title,content] delegate:nil cancelButtonTitle:@"接听" otherButtonTitles:@"拒绝", nil];
+  [alertView show];
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
